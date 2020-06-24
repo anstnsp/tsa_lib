@@ -1,11 +1,10 @@
 package com.anstn.test.util;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -14,11 +13,7 @@ import org.apache.http.client.config.RequestConfig.Builder;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-
-
-
 import com.google.gson.Gson;
-
 
 public class HttpConnectionConfig {
  

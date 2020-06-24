@@ -56,38 +56,51 @@ public class TSAClient {
 	     * @throws CertificateException 
 	     */
 	    byte[] getTimeStampToken(byte[] messageImprint) throws IOException, TSPException, CertificateException, OperatorCreationException, NoSuchAlgorithmException {
-	        this.digest.reset();
-	        byte[] hash = this.digest.digest(messageImprint);
+	        try {
+		    	this.digest.reset();
+		        byte[] hash = this.digest.digest(messageImprint);
 
-	        // generate cryptographic nonce
-	        SecureRandom random = new SecureRandom();
-	        int nonce = random.nextInt();
+		        // generate cryptographic nonce
+		        SecureRandom random = new SecureRandom();
+		        int nonce = random.nextInt();
 
-	        // generate TSA request
-	        TimeStampRequestGenerator tsaGenerator = new TimeStampRequestGenerator();
-	        tsaGenerator.setCertReq(true);
-	        ASN1ObjectIdentifier oid = new ASN1ObjectIdentifier(NISTObjectIdentifiers.id_sha256.getId());
-	        TimeStampRequest request = tsaGenerator.generate(oid, hash, BigInteger.valueOf(nonce));
-	       	//request.getEncoded() 이게 TimeStampReq 클래스임.. 
-	        // get TSA response
-	        byte[] tsaResponse = getTSAResponse(request.getEncoded());
+		        // generate TSA request
+		        TimeStampRequestGenerator tsaGenerator = new TimeStampRequestGenerator();
+		        tsaGenerator.setCertReq(true);
+		        ASN1ObjectIdentifier oid = new ASN1ObjectIdentifier(NISTObjectIdentifiers.id_sha256.getId());
+		        TimeStampRequest request = tsaGenerator.generate(oid, hash, BigInteger.valueOf(nonce));
+		       	//request.getEncoded() 이게 TimeStampReq 클래스임.. 
+		        // get TSA response
+		        byte[] tsaResponse = getTSAResponse(request.getEncoded());   //IOExcetpion
 
-	        TimeStampResponse response = new TimeStampResponse(tsaResponse);
-	        response.validate(request);
-	        
-	        TimeStampToken token = response.getTimeStampToken();
-	      
-	        //타임스탬프토큰의 검증
-	        SigUtils.validateTimestampToken(token, cert);
-	   
-	        if (token == null) {
-	            throw new IOException("Response does not have a time stamp token");
+		        TimeStampResponse response = new TimeStampResponse(tsaResponse);   //TSPException
+		        response.validate(request);   //TSPException
+		        
+		        TimeStampToken token = response.getTimeStampToken();
+		      
+		        //타임스탬프토큰의 검증
+		        SigUtils.validateTimestampToken(token, cert);  //CertificateException, OperatorCreationException
+		   
+		        if (token == null) {
+		        	LOG.error("Response does not have a time stamp token");
+		            throw new IOException("Response does not have a time stamp token");
+		        }
+
+		        return token.getEncoded();
+	        } catch (IOException e) {
+	        	LOG.error("error occur while communication with TSA_SERVER");
+	        	throw e; 
+	        } catch (TSPException e) {
+	        	LOG.error("inappropriate TSA response");
+	        	throw e; 
+	        } catch (OperatorCreationException | CertificateException e) {
+	        	LOG.error("error occur while validating token because cert problem");
+	        	throw e;
 	        }
 
-	        return token.getEncoded();
 	    }
 
-	    private byte[] getTSAResponse(byte[] request) throws IOException {
+	    private byte[] getTSAResponse(byte[] request) throws IOException  {
 	    	LOG.debug("Opening connection to TSA server");
 	    	HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 	    	connection.setDoOutput(true); // output을 사용하도록 설정 (default : false)
