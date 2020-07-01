@@ -84,8 +84,7 @@ public class SignatureService {
 		try {
 	       	File originFile = new File(originFilePathAndNm); //원본PDF의 파일
 	    	byte[] originfileByte = Files.readAllBytes(originFile.toPath()); //원본파일을 바이트배열로 변환. 
-	    	
-	    	
+
 			//1.TSA서버에게 요청하여 토큰 받고 서명이 된 byte[]문서 리턴. 
 			byte[] signedPdfByte = signingService.signPdf(originfileByte);
 			//2.서명파일 만들기. 

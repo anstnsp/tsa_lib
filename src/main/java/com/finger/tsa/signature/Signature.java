@@ -28,7 +28,7 @@ public class Signature implements SignatureInterface{
     private X509Certificate certificate;
     private String tsaUrl;
 
-    Signature(PrivateKey privateKey, X509Certificate certificate, String tsaUrl) throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, IOException, CertificateNotYetValidException, CertificateExpiredException {
+    Signature(PrivateKey privateKey, X509Certificate certificate, String tsaUrl) throws CertificateExpiredException, CertificateNotYetValidException {
         this.privateKey = privateKey;
         this.certificate = certificate;
 

@@ -88,7 +88,7 @@ public class SigningService {
 
 	            return signedPdfBytes;
 	            
-	        } catch (NoSuchAlgorithmException | CertificateException | UnrecoverableKeyException | KeyStoreException e) {
+	        } catch (NoSuchAlgorithmException | CertificateException e) {
 	        	LOG.error("Exception position : Cannot obtain proper KeyStore or Certificate, msg:"+e.getMessage());
 	            throw e;
 	        } catch (IOException e) {
