@@ -1,8 +1,11 @@
 HELP.md
-target/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+/target/
+/target/classes/
+product/
 
 ### STS ###
 .apt_generated
@@ -29,3 +32,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+## LOG ###
+logs/
+prod_logs/
+
+##DB##
+data/
