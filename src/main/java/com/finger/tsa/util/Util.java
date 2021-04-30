@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class Util {
 	private static final Log LOG = LogFactory.getLog(Util.class);
-	
+	// 풀리퀘스트 테스트 커맨드랑 여러가지
 	/**
 	 * 파일을 바이너리 스트링으로 변경
 	 *
