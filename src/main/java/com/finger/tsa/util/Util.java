@@ -28,6 +28,10 @@ import org.apache.commons.logging.LogFactory;
 public class Util {
 	private static final Log LOG = LogFactory.getLog(Util.class);
 	// 풀리퀘스트 테스트 커맨드랑 여러가지
+	public static String goodjob() {
+		//여기를 테스트해볼거야 ㅎㅎ
+		return "ff";
+	}
 	/**
 	 * 파일을 바이너리 스트링으로 변경
 	 *
@@ -46,7 +50,7 @@ public class Util {
 	        LOG.error("Exception position : FileUtil(FileNotFound) - fileToString(File file)");
 	        throw e;
 	    }
-	 
+
 	    int len = 0;
 	    byte[] buf = new byte[1024];
 	    try {
