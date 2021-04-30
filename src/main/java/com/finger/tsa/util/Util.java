@@ -32,6 +32,14 @@ public class Util {
 		//여기를 테스트해볼거야 ㅎㅎ
 		return "ff";
 	}
+
+
+	// 풀리퀘스트 테스트 커맨드랑 여러가지
+	public static String goodjob222() {
+		//여기를 테스트해볼거야 ㅎㅎ
+		return "ff";
+	}
+
 	/**
 	 * 파일을 바이너리 스트링으로 변경
 	 *
